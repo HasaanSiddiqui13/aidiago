@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare AI Website</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Background Video */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 95%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Floating Login Tabs */
+        .login-buttons {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .login-btn {
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+            opacity: 0.9;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .doctor-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .admin-btn {
+            background-color: #ff5733;
+            color: white;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-5px);
+            opacity: 1;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 280px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Slideshow Styling */
+        .slideshow-container {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 20px 0;
+            gap: 15px;
+            scroll-behavior: smooth;
+            justify-content: center;
+        }
+
+        .slide {
+            width: 300px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.5s ease-in-out, opacity 0.5s;
+        }
+
+        .slide:hover {
+            transform: scale(1.1);
+        }
+
+        /* Adjusted Popup Modal */
+        #popupModal .modal-content {
+            width: 250px;
+            padding: 15px;
+        }
+
+        #popup-img {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <video autoplay muted loop id="bg-video">
+            <source src="background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>Welcome to Healthcare AI</h1>
+            <p>Revolutionizing Diagnosis with AI Technology</p>
+        </div>
+        <div class="login-buttons">
+            <button class="login-btn doctor-btn" onclick="openModal('doctorLogin')">Doctor Login</button>
+            <button class="login-btn admin-btn" onclick="openModal('adminLogin')">Admin Login</button>
+        </div>
+    </header>
+
+    <!-- Login Modals -->
+    <div id="doctorLogin" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('doctorLogin')">&times;</span>
+            <h3>Doctor Login</h3>
+            <input type="text" placeholder="Username"><br><br>
+            <input type="password" placeholder="Password"><br><br>
+            <button>Login</button>
+        </div>
+    </div>
+
+    <div id="adminLogin" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('adminLogin')">&times;</span>
+            <h3>Admin Login</h3>
+            <input type="text" placeholder="Username"><br><br>
+            <input type="password" placeholder="Password"><br><br>
+            <button>Login</button>
+        </div>
+    </div>
+
+    <h1>How Does It Work?</h1>
+    <div class="slideshow-container">
+        <img src="step1.webp" class="slide" onclick="openPopup('Step 1', 'step1.webp', 'Enter Patient Details')">
+        <img src="step2.webp" class="slide" onclick="openPopup('Step 2', 'step2.webp', 'AI Analyzes Symptoms')">
+        <img src="step3.webp" class="slide" onclick="openPopup('Step 3', 'step3.webp', 'AI Provides Diagnosis')">
+        <img src="step4.webp" class="slide" onclick="openPopup('Step 4', 'step4.webp', 'Doctor Reviews & Confirms')">
+    </div>
+
+    <!-- Slideshow Popup Modal -->
+    <div id="popupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h3 id="popup-title"></h3>
+            <img id="popup-img" src="" alt="">
+            <p id="popup-desc"></p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        function openPopup(title, imgSrc, desc) {
+            document.getElementById("popup-title").innerText = title;
+            document.getElementById("popup-img").src = imgSrc;
+            document.getElementById("popup-desc").innerText = desc;
+            document.getElementById("popupModal").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popupModal").style.display = "none";
+        }
+    </script>
+<h1>AI-Powered Diagnosis</h1>
+    <div class="slideshow-container">
+        <img src="ai_diagnosis1.webp" class="slide" onclick="openPopup('AI Step 1', 'ai_diagnosis1.webp', 'AI scans medical records')">
+        <img src="ai_diagnosis2.webp" class="slide" onclick="openPopup('AI Step 2', 'ai_diagnosis2.webp', 'AI compares with database')">
+        <img src="ai_diagnosis3.webp" class="slide" onclick="openPopup('AI Step 3', 'ai_diagnosis3.webp', 'Diagnosis and treatment suggestions')">
+    </div>
+
+    <h1>Seamless Integration</h1>
+    <div class="slideshow-container">
+        <img src="integration1.webp" class="slide" onclick="openPopup('Integration Step 1', 'integration1.webp', 'EHR integration with AI')">
+        <img src="integration2.webp" class="slide" onclick="openPopup('Integration Step 2', 'integration2.webp', 'Real-time monitoring of patient data')">
+        <img src="integration3.webp" class="slide" onclick="openPopup('Integration Step 3', 'integration3.webp', 'Automated reporting and analytics')">
+    </div>
+
+    <h1>Future of Healthcare</h1>
+    <div class="slideshow-container">
+        <img src="future1.webp" class="slide" onclick="openPopup('Future Step 1', 'future1
+
+<h2>Founders</h2>
+<p class="founder"></p>
+<p class="founder">Kinza Saif & Romisa Abbas</p>
+
+<style>
+    .founder {
+        font-weight: bold;
+        font-size: 20px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .founder:hover {
+        background-color: #ffcc00; /* Highlight color */
+        color: #000; /* Text color change on hover */
+    }
+</style>
+
+
+
+</body>
+</html>

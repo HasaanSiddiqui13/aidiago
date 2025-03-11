@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Diagnosis - Healthcare AI</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Background Video */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .input-section {
+            margin: 20px 0;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        .diagnose-button {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .diagnose-button:hover {
+            background: #0056b3;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e9f5ff;
+            border-radius: 5px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            background: #222;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <video autoplay muted loop id="bg-video">
+            <source src="background.mp4" type="video/mp4">
+        </video>
+        <div>
+            <h1>AI Diagnosis</h1>
+            <p>Revolutionizing Healthcare with AI</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Enter Symptoms</h2>
+        <div class="input-section">
+            <textarea id="symptoms" rows="4" placeholder="Describe patient symptoms..."></textarea>
+            <input type="file" id="test-results" accept="image/*">
+        </div>
+        <button class="diagnose-button" onclick="getDiagnosis()">Diagnose</button>
+
+        <div class="result-section" id="diagnosis-result" style="display: none;">
+            <h3>Diagnosis Result</h3>
+            <p id="ai-diagnosis-text">Processing...</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Healthcare AI | All rights reserved</p>
+    </div>
+
+    <script>
+        function getDiagnosis() {
+            document.getElementById("diagnosis-result").style.display = "block";
+            document.getElementById("ai-diagnosis-text").innerText = "AI is analyzing symptoms...";
+
+            setTimeout(() => {
+                document.getElementById("ai-diagnosis-text").innerText = "Possible Conditions: Hypothyroidism, Hyperthyroidism, or Normal";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

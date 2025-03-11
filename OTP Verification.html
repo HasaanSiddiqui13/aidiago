@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification - Healthcare AI</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .otp-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .otp-button {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .otp-button:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        function sendOTP() {
+            let phoneOrEmail = document.getElementById("phoneOrEmail").value;
+            if(phoneOrEmail === "") {
+                alert("Please enter your phone number or email.");
+                return;
+            }
+            let otp = Math.floor(100000 + Math.random() * 900000);
+            sessionStorage.setItem("generatedOTP", otp);
+            alert("Your OTP is: " + otp + " (This should be sent via SMS/Email in real application)");
+        }
+
+        function verifyOTP() {
+            let enteredOTP = document.getElementById("otp").value;
+            let generatedOTP = sessionStorage.getItem("generatedOTP");
+            if(enteredOTP === generatedOTP) {
+                alert("OTP Verified! Access Granted.");
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Incorrect OTP. Please try again.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="otp-container">
+        <h1>Enter OTP</h1>
+        <input type="text" id="phoneOrEmail" placeholder="📩 Enter Email or Phone Number">
+        <button class="otp-button" onclick="sendOTP()">Send OTP</button>
+        <input type="text" id="otp" placeholder="🔢 Enter OTP">
+        <button class="otp-button" onclick="verifyOTP()">Verify OTP</button>
+    </div>
+</body>
+</html>

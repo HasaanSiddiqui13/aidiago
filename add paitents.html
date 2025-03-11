@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register New Patient</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Patient Registration Form */
+        .patient-form {
+            background: white;
+            width: 40%;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: 0.3s ease-in-out;
+        }
+
+        .patient-form:hover {
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .patient-form label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .patient-form input, .patient-form select, .patient-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .submit-btn, .check-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover, .check-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            float: right;
+            font-size: 22px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Register New Patient</h2>
+    <div class="patient-form">
+        <label for="existing-patient">Existing Patient?</label>
+        <input type="checkbox" id="existing-patient" onclick="toggleSearch()">
+
+        <div id="new-patient-form">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter patient name">
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" placeholder="Enter age">
+
+            <label for="gender">Gender:</label>
+            <select id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" placeholder="Enter contact number">
+
+            <label for="history">Medical History:</label>
+            <textarea id="history" placeholder="Enter medical history"></textarea>
+
+            <label for="symptoms">Symptoms:</label>
+            <textarea id="symptoms" placeholder="Enter symptoms"></textarea>
+
+            <button class="submit-btn" onclick="savePatient()">Save Patient</button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Success!</h3>
+            <p>Patient registered successfully.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSearch() {
+            let checkbox = document.getElementById("existing-patient");
+            if (checkbox.checked) {
+                window.location.href = "patient_search.html";
+            }
+        }
+
+        function savePatient() {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let gender = document.getElementById("gender").value;
+            let contact = document.getElementById("contact").value;
+            let history = document.getElementById("history").value;
+            let symptoms = document.getElementById("symptoms").value;
+
+            if (!name || !age || !gender || !contact || !history || !symptoms) {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            let patientData = {
+                name, age, gender, contact, history, symptoms
+            };
+
+            console.log("Saved Patient Data:", patientData);
+            document.getElementById("successModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("successModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
